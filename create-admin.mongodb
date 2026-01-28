@@ -1,0 +1,77 @@
+// MongoDB Shell Script to Create Admin User
+// Copy and paste this into MongoDB Compass or MongoDB Shell
+
+// 1. First, check if any users exist
+db.users.find().pretty();
+
+// 2. Create admin user (run this)
+// Note: This password is already hashed with bcrypt for 'admin123456'
+db.users.insertOne({
+  name: "Admin User",
+  email: "admin@greeninovics.com",
+  phone: "1234567890",
+  // Pre-hashed password for 'admin123456' (bcrypt hash)
+  password: "$2a$10$YourBcryptHashHere",
+  isAdmin: true,
+  role: "admin",
+  createdAt: new Date(),
+  updatedAt: new Date()
+});
+
+// 3. OR if you already have a user, update them to admin:
+// Replace 'your-email@example.com' with your actual email
+db.users.updateOne(
+  { email: "your-email@example.com" },
+  { 
+    $set: { 
+      isAdmin: true, 
+      role: "admin" 
+    } 
+  }
+);
+
+// 4. Verify the admin user was created/updated
+db.users.findOne({ email: "admin@greeninovics.com" });
+
+// OR verify your updated user
+db.users.findOne({ email: "your-email@example.com" });
+
+/* 
+═══════════════════════════════════════════════════════
+                  QUICK INSTRUCTIONS
+═══════════════════════════════════════════════════════
+
+OPTION 1: Make Your Existing User an Admin
+-------------------------------------------
+1. Find your email in the users collection
+2. Run this command (replace the email):
+
+   db.users.updateOne(
+     { email: "YOUR_ACTUAL_EMAIL@example.com" },
+     { $set: { isAdmin: true, role: "admin" } }
+   )
+
+3. Verify with:
+   db.users.findOne({ email: "YOUR_ACTUAL_EMAIL@example.com" })
+
+4. Log out and log back in
+
+
+OPTION 2: Use the Node.js Script
+---------------------------------
+Run this in the backend directory:
+   node createAdminUser.js
+
+This will create:
+   Email: admin@greeninovics.com
+   Password: admin123456
+
+
+IMPORTANT: After making changes, you MUST:
+1. Clear browser cache (Ctrl+Shift+Delete)
+2. Log out completely
+3. Log back in with admin credentials
+4. Visit /admin/diagnostics to verify
+
+═══════════════════════════════════════════════════════
+*/
