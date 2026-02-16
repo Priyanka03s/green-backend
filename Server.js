@@ -21,6 +21,10 @@ import addressRoutes from './routes/addressRoutes.js';
 import wishlistRoutes from './routes/wishListRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import flashMessageRoutes from './routes/flashMessageRoutes.js';
+import trackShipmentRoutes from "./routes/tacking.routes.js"
+import checkPincodeRoutes from "./routes/pincodeRoutes.js"
+import locationRoutes from "./routes/locationRoutes.js"
+import stateRoutes from "./routes/stateRoutes.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -101,6 +105,11 @@ app.use('/api/addresses', addressRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/flash-messages', flashMessageRoutes);
+app.use("/api/shipment",trackShipmentRoutes)
+app.use("/api",checkPincodeRoutes)
+app.use("/api/location", locationRoutes);
+app.use("/api/states", stateRoutes)
+
 // -------------------- TEST ROUTES --------------------
 app.get('/', (req, res) => {
   res.json({

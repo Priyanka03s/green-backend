@@ -25,6 +25,7 @@ const orderItemSchema = new mongoose.Schema({
     required: true,
     min: 0.1,
   },
+  
 });
 
 const orderSchema = new mongoose.Schema(
@@ -72,7 +73,7 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: ["Pending", "Confirmed", "Shipped", "Delivered", "Cancelled"],
+      enum: ["Pending", "Confirmed", "Shipped", "Delivered", "Cancelled","Pending Admin Approval"],
       default: "Pending",
     },
     paymentStatus: {
@@ -115,6 +116,35 @@ const orderSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+// 🔹 Logistics Fields
+waybill: { type: String },
+
+deliveryPartner: {
+  type: String,
+  enum: ["DELHIVERY", "ADMIN"],
+  default: "ADMIN"
+},
+
+shipmentStatus: {
+  type: String,
+  enum: [
+    "Not Created",
+    "Manifested",
+    "In Transit",
+    "Out for Delivery",
+    "Delivered",
+    "RTO",
+    "Cancelled"
+  ],
+  default: "Not Created"
+},
+
+shipmentResponse: { type: Object },
+
+delhiveryCreatedAt: { type: Date },
+
+
+
     // models/Order.js (update the deliveryAddress field)
     deliveryAddress: {
       fullName: { type: String, required: true },
