@@ -39,9 +39,11 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:3000',
   'https://green-inovics-002.netlify.app',
-  "https://green-inovics-web.netlify.app",
-  "https://reliable-torrone-279885.netlify.app/"
+  'https://green-inovics-web.netlify.app',
+  'https://reliable-torrone-279885.netlify.app'
 ];
+
+
 
 if (process.env.ALLOWED_ORIGINS) {
   process.env.ALLOWED_ORIGINS.split(',').forEach(origin => {
@@ -60,7 +62,10 @@ app.use(
   })
 );
 
-app.options('*', cors());
+app.options('*', cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 // -------------------- SECURITY HEADERS --------------------
 app.use((req, res, next) => {
